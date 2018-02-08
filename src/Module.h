@@ -8,6 +8,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxMaxim.h"
 
 class Module {
     
@@ -25,9 +26,20 @@ class Module {
         void setFocused(bool _focused);
     
     
+        // audio
+    
+        double signal();
+        int currentCount {0};
+        int lastCount;
+        maxiOsc clock;
+        maxiSample sample;
+        double tempo;
+        bool trigger;
+    
+    
     private:
     
         ofPoint pos;
-    bool focused {false};
+        bool focused {false};
     
 };

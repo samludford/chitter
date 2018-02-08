@@ -9,6 +9,13 @@
 
 Module::Module(ofPoint _pos) {
     pos = _pos;
+    
+    // audio setup
+    tempo = ofMap(pos.x, 0, ofGetWidth(), 2, 2.1);
+    
+    // load sample
+    
+    sample.load(ofToDataPath("k.wav"));
 }
 
 void Module::draw() {
@@ -42,5 +49,16 @@ ofPoint Module::getPosition() {
 
 void Module::setFocused(bool _focused) {
     focused = _focused;
+}
+
+// Sound
+
+double Module::signal() {
+    currentCount = (int) clock.phasor(tempo);
+    if(lastCount != currentCount) {
+        sample.trigger();
+        lastCount = 0;
+    }
+    return sample.playOnce();
 }
 

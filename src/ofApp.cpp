@@ -64,6 +64,12 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
         
 //        currentCount += (int) clock.phasor(tempo);
         wave = 0.0;
+        
+        for(int i=0 ; i < modules.size() ; i++) {
+            wave += modules[i]->signal();
+        }
+        
+        wave /= modules.size();
 
         output[i*nChannels    ] = wave;
         output[i*nChannels + 1] = wave;
