@@ -25,16 +25,16 @@ class Module {
     
         void setFocused(bool _focused);
     
-    
         // audio
     
-        double signal();
+        void signal(double *output);
         int currentCount {0};
         int lastCount;
         maxiOsc clock;
         maxiSample sample;
         double tempo;
         bool trigger;
+        maxiMix mixer;
     
     
     private:

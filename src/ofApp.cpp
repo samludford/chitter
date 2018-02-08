@@ -62,17 +62,16 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
     
     for (int i = 0; i < bufferSize; i++){
         
-//        currentCount += (int) clock.phasor(tempo);
-        wave = 0.0;
-        
+        left = 0.0;
+        right = 0.0;
         for(int i=0 ; i < modules.size() ; i++) {
-            wave += modules[i]->signal();
+            modules[i]->signal(stereoOut);
+            left += stereoOut[0];
+            right += stereoOut[1];
         }
-        
-        wave /= modules.size();
 
-        output[i*nChannels    ] = wave;
-        output[i*nChannels + 1] = wave;
+        output[i*nChannels    ] = left;
+        output[i*nChannels + 1] = right;
 
     }
     

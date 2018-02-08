@@ -14,7 +14,6 @@ Module::Module(ofPoint _pos) {
     tempo = ofMap(pos.x, 0, ofGetWidth(), 2, 2.1);
     
     // load sample
-    
     sample.load(ofToDataPath("k.wav"));
 }
 
@@ -53,12 +52,13 @@ void Module::setFocused(bool _focused) {
 
 // Sound
 
-double Module::signal() {
+void Module::signal(double *output) {
+    double pan = ofMap(pos.x, 0, ofGetWidth(), 0, 1);
     currentCount = (int) clock.phasor(tempo);
     if(lastCount != currentCount) {
         sample.trigger();
         lastCount = 0;
     }
-    return sample.playOnce();
+    mixer.stereo(sample.playOnce(), output, pan);
 }
 

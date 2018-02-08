@@ -32,14 +32,13 @@ class ofApp : public ofBaseApp{
         void audioOut(float * output, int bufferSize, int nChannels);
         void audioIn(float * input, int bufferSize, int nChannels);
      
-     
     
     int		bufferSize; /* buffer size */
     int		sampleRate;
     
-    // composition
-    
-    double wave;
+    double left;
+    double right;
+    double stereoOut[2];
     
     // drawing
     
@@ -50,4 +49,6 @@ class ofApp : public ofBaseApp{
     
     bool focused {false};
     ofPoint focus_offset;
+    
+    
 };
