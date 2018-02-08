@@ -10,6 +10,9 @@
 #include "ofMain.h"
 #include "ofxMaxim.h"
 
+#define MAX_RINGS 6
+#define RING_INC 1
+
 class Module {
     
     public:
@@ -19,11 +22,15 @@ class Module {
         Module(ofPoint _pos);
 
         void draw();
+        void drawCrosshair();
+        void drawRings();
         void update();
         void setPosition(ofPoint _pos);
         ofPoint getPosition();
     
         void setFocused(bool _focused);
+    
+        deque<float> rings;
     
         // audio
     

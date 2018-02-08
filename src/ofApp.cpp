@@ -33,10 +33,10 @@ void ofApp::setup(){
     
     ofSetCircleResolution(100);
     
-    float count = 8;
+    float count = 5;
     float spacing = ofGetWidth() / count;
     float start_x = spacing / 2.0;
-    for(int i=0 ; i <8 ; i++) {
+    for(int i=0 ; i < count ; i++) {
         Module *m = new Module(ofPoint(start_x + i*spacing, ofGetHeight()/2.0));
         modules.push_back(m);
     }
@@ -52,6 +52,12 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    for(int i=0 ; i < modules.size() ; i++) {
+        modules[i]->drawCrosshair();
+    }
+    for(int i=0 ; i < modules.size() ; i++) {
+        modules[i]->drawRings();
+    }
     for(int i=0 ; i < modules.size() ; i++) {
         modules[i]->draw();
     }

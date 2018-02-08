@@ -17,6 +17,25 @@ Module::Module(ofPoint _pos) {
     sample.load(ofToDataPath("k.wav"));
 }
 
+void Module::drawCrosshair() {
+    ofPushStyle();
+    ofSetColor(255, 30);
+    ofDrawLine(0,pos.y,ofGetWidth(),pos.y);
+    ofDrawLine(pos.x,0,pos.x,ofGetHeight());
+    ofPopStyle();
+}
+
+void Module::drawRings() {
+    ofPushStyle();
+    ofNoFill();
+    for(int i=0 ; i < rings.size() ; i++) {
+        float alpha = ofMap(i, 0, MAX_RINGS, 255, 0);
+        ofSetColor(255, alpha);
+        ofDrawCircle(pos.x, pos.y, rings[i]);
+    }
+    ofPopStyle();
+}
+
 void Module::draw() {
     ofPushStyle();
     
@@ -35,7 +54,9 @@ void Module::draw() {
 }
 
 void Module::update() {
-    
+    for(int i=0 ; i < rings.size() ; i++) {
+        rings[i] += RING_INC;
+    }
 }
 
 void Module::setPosition(ofPoint _pos) {
@@ -55,6 +76,11 @@ void Module::setFocused(bool _focused) {
 double Module::signal() {
     currentCount = (int) clock.phasor(tempo);
     if(lastCount != currentCount) {
+        // also add ring
+        rings.push_front(rad);
+        if(rings.size()>MAX_RINGS) {
+            rings.pop_back();
+        }
         sample.trigger();
         lastCount = 0;
     }
