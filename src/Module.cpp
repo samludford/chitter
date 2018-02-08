@@ -13,7 +13,13 @@ Module::Module(ofPoint _pos) {
 
 void Module::draw() {
     ofPushStyle();
-    ofSetColor(255,0,0, 255);
+    
+    if(focused) {
+        ofSetColor(255,0,0, 255);
+    } else {
+        ofSetColor(255,0,0, 180);
+    }
+    
     ofFill();
     ofDrawCircle(pos.x, pos.y, rad);
     ofSetColor(0, 255);
@@ -32,5 +38,9 @@ void Module::setPosition(ofPoint _pos) {
 
 ofPoint Module::getPosition() {
     return pos;
+}
+
+void Module::setFocused(bool _focused) {
+    focused = _focused;
 }
 

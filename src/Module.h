@@ -22,8 +22,12 @@ class Module {
         void setPosition(ofPoint _pos);
         ofPoint getPosition();
     
+        void setFocused(bool _focused);
+    
+    
     private:
     
         ofPoint pos;
+    bool focused {false};
     
 };

@@ -46,6 +46,7 @@ class ofApp : public ofBaseApp{
     vector<Module*> modules;
     
     float distance_from_center(ofPoint pos);
+    void set_focus();
     
     bool focused {false};
     ofPoint focus_offset;

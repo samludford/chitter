@@ -131,6 +131,7 @@ void ofApp::mousePressed(int x, int y, int button){
         modules.erase(modules.begin() + focus);
         modules.push_back(focused_module);
         focused = true;
+        set_focus();
     }
 }
 
@@ -159,6 +160,12 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 float ofApp::distance_from_center(ofPoint pos) {
     ofPoint delta = pos - ofPoint(ofGetWidth()/2.0, ofGetHeight()/2.0);
     return sqrt(delta.x * delta.x + delta.y * delta.y);
+}
+
+void ofApp::set_focus() {
+    for(int i=0 ; i < modules.size() ; i++) {
+        modules[i]->setFocused(i==modules.size()-1);
+    }
 }
 
 
