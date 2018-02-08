@@ -39,6 +39,7 @@ class ofApp : public ofBaseApp{
     double left;
     double right;
     double stereoOut[2];
+    maxiMix mixer;
     
     // drawing
     

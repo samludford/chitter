@@ -59,22 +59,18 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
-    
     for (int i = 0; i < bufferSize; i++){
-        
         left = 0.0;
         right = 0.0;
         for(int i=0 ; i < modules.size() ; i++) {
-            modules[i]->signal(stereoOut);
+            double pan = ofMap(modules[i]->getPosition().x, 0, ofGetWidth(), 0, 1);
+            mixer.stereo(modules[i]->signal(), stereoOut, pan);
             left += stereoOut[0];
             right += stereoOut[1];
         }
-
         output[i*nChannels    ] = left;
         output[i*nChannels + 1] = right;
-
     }
-    
 }
 
 // remove - not needed

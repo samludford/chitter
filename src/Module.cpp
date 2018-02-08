@@ -52,13 +52,12 @@ void Module::setFocused(bool _focused) {
 
 // Sound
 
-void Module::signal(double *output) {
-    double pan = ofMap(pos.x, 0, ofGetWidth(), 0, 1);
+double Module::signal() {
     currentCount = (int) clock.phasor(tempo);
     if(lastCount != currentCount) {
         sample.trigger();
         lastCount = 0;
     }
-    mixer.stereo(sample.playOnce(), output, pan);
+    return sample.playOnce();
 }
 

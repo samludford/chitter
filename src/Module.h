@@ -27,14 +27,13 @@ class Module {
     
         // audio
     
-        void signal(double *output);
+        double signal();
         int currentCount {0};
         int lastCount;
         maxiOsc clock;
         maxiSample sample;
         double tempo;
         bool trigger;
-        maxiMix mixer;
     
     
     private:
