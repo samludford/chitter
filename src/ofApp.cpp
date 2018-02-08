@@ -33,26 +33,28 @@ void ofApp::setup(){
     
     ofSetCircleResolution(100);
     
-    float spacing = ofGetWidth() / person_count;
+    float count = 8;
+    float spacing = ofGetWidth() / count;
     float start_x = spacing / 2.0;
-    for(int i=0 ; i <person_count ; i++) {
-        people.push_back(ofPoint(start_x + i*spacing, ofGetHeight()/2.0));
+    for(int i=0 ; i <8 ; i++) {
+        Module *m = new Module(ofPoint(start_x + i*spacing, ofGetHeight()/2.0));
+        modules.push_back(m);
     }
     
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    
+    for(int i=0 ; i < modules.size() ; i++) {
+        modules[i]->update();
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    
-    for(int i=0 ; i < people.size() ; i++) {
-        draw_person(people[i]);
+    for(int i=0 ; i < modules.size() ; i++) {
+        modules[i]->draw();
     }
-    
 }
 
 //--------------------------------------------------------------
@@ -97,7 +99,8 @@ void ofApp::mouseMoved(int x, int y){
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
     if(focused) {
-        people[people.size()-1] = ofPoint(x,y) - focus_offset;
+        Module *m = modules[modules.size()-1];
+        m->setPosition(ofPoint(x,y) - focus_offset);
     }
 }
 
@@ -106,19 +109,20 @@ void ofApp::mousePressed(int x, int y, int button){
     ofPoint mouse_pos = ofPoint(x,y);
     int focus = -1;
     // cycle backwards to pick up top elements first
-    for(int i=people.size()-1 ; i >= 0 ; i--) {
-        ofPoint delta = mouse_pos - people[i];
+    for(int i=modules.size()-1 ; i >= 0 ; i--) {
+        Module *m = modules[i];
+        ofPoint delta = mouse_pos - m->getPosition();
         float dist = sqrt(delta.x * delta.x + delta.y * delta.y);
-        if(dist <= person_size) {
+        if(dist <= m->rad) {
             focus = i;
             focus_offset = delta;
             break;
         }
     }
     if(focus >= 0) {
-        ofPoint focused_person = people[focus];
-        people.erase(people.begin() + focus);
-        people.push_back(focused_person);
+        Module *focused_module = modules[focus];
+        modules.erase(modules.begin() + focus);
+        modules.push_back(focused_module);
         focused = true;
     }
 }
@@ -144,19 +148,6 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 }
 
 // utilities
-
-void ofApp::draw_person(ofPoint pos) {
-    
-    ofPushStyle();
-    ofSetColor(255,0,0, 255);
-    ofFill();
-    ofDrawCircle(pos.x, pos.y, person_size);
-    ofSetColor(0, 255);
-    ofNoFill();
-    ofDrawCircle(pos.x, pos.y, person_size);
-    ofPopStyle();
-    
-}
 
 float ofApp::distance_from_center(ofPoint pos) {
     ofPoint delta = pos - ofPoint(ofGetWidth()/2.0, ofGetHeight()/2.0);

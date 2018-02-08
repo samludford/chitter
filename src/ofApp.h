@@ -2,11 +2,13 @@
 
 #include "ofMain.h"
 #include "ofxMaxim.h"
+#include "Module.h"
 
 #define PLANETS 8
 #define RAD_OFFSET 3
 #define PEOPLE 8
 #define PERSON_SIZE 15
+
 
 class ofApp : public ofBaseApp{
 
@@ -41,13 +43,9 @@ class ofApp : public ofBaseApp{
     
     // drawing
     
-    void draw_person(ofPoint pos);
+    vector<Module*> modules;
     
-    vector<ofPoint> people;
     float distance_from_center(ofPoint pos);
-    
-    const float person_size {PERSON_SIZE};
-    const int person_count {PEOPLE};
     
     bool focused {false};
     ofPoint focus_offset;
