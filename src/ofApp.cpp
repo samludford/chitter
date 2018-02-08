@@ -81,7 +81,14 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    
+    if(key == 'a') {
+        Module *m = new Module(ofPoint(ofGetWidth()/2.0, ofGetHeight()/2.0));
+        modules.push_back(m);
+    } else if (key == 's') {
+        if(modules.size() > 0 ) {
+            modules.pop_back();
+        }
+    }
     
 }
 
