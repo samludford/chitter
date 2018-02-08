@@ -18,6 +18,7 @@ class Module {
     public:
     
         float rad {20.0};
+        double speed = 1.0;
     
         Module(ofPoint _pos);
 
@@ -38,6 +39,8 @@ class Module {
         int currentCount {0};
         int lastCount;
         maxiOsc clock;
+        maxiOsc tracker;
+        double trackerVal;
         maxiSample sample;
         double tempo;
         bool trigger;

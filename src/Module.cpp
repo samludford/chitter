@@ -7,11 +7,15 @@
 
 #include "Module.h"
 
+
+
 Module::Module(ofPoint _pos) {
     pos = _pos;
     
     // audio setup
-    tempo = ofMap(pos.x, 0, ofGetWidth(), 2, 2.1);
+    tempo = ofMap(pos.x, 0, ofGetWidth(), 2, 2.05);
+    
+    speed = 1 + ofRandom(-0.2,0.2);
     
     // load sample
     sample.load(ofToDataPath("b.wav"));
@@ -39,17 +43,19 @@ void Module::drawRings() {
 void Module::draw() {
     ofPushStyle();
     
-    if(focused) {
-        ofSetColor(255,0,0, 255);
-    } else {
-        ofSetColor(255,0,0, 180);
-    }
+    ofSetColor(48,205,233, ofMap(trackerVal, -1, 1, 30, 160));
     
     ofFill();
     ofDrawCircle(pos.x, pos.y, rad);
     ofSetColor(0, 255);
     ofNoFill();
-    ofDrawCircle(pos.x, pos.y, rad);
+    
+        if(focused) {
+            ofSetColor(255);
+            ofSetLineWidth(3.0);
+            ofDrawCircle(pos.x, pos.y, rad);
+        }
+
     ofPopStyle();
 }
 
@@ -75,6 +81,7 @@ void Module::setFocused(bool _focused) {
 
 double Module::signal() {
     currentCount = (int) clock.phasor(tempo);
+    trackerVal = tracker.sinewave(tempo);
     if(lastCount != currentCount) {
         // also add ring
         rings.push_front(rad);
@@ -84,6 +91,6 @@ double Module::signal() {
         sample.trigger();
         lastCount = 0;
     }
-    return sample.playOnce();
+    return sample.playOnce(speed);
 }
 
