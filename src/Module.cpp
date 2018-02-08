@@ -14,7 +14,7 @@ Module::Module(ofPoint _pos) {
     tempo = ofMap(pos.x, 0, ofGetWidth(), 2, 2.1);
     
     // load sample
-    sample.load(ofToDataPath("k.wav"));
+    sample.load(ofToDataPath("b.wav"));
 }
 
 void Module::drawCrosshair() {
